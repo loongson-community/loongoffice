@@ -39,14 +39,14 @@ office_root=${office_prefix}/${PREFIX}
 #this symlink is needed to have the API bootstrap functions running right
 ln -sf "${office_root}/program/soffice" "${DESTDIR}/${BINDIR}/${PREFIX}"
 
-if test "${PREFIX}" != libreoffice${PRODUCTVERSION} -a "${PREFIX}" != libreofficedev${PRODUCTVERSION}  ; then
+if test "${PREFIX}" != loongoffice -a "${PREFIX}" != loongofficedev  ; then
     # compat symlinks
     mkdir -p "${DESTDIR}${office_prefix}"
-    ln -sf libreoffice${PRODUCTVERSION} "${DESTDIR}${office_root}"
-    ln -sf /${BINDIR}/${PREFIX} "${DESTDIR}/${BINDIR}/libreoffice${PRODUCTVERSION}"
+    ln -sf loongoffice "${DESTDIR}${office_root}"
+    ln -sf /${BINDIR}/${PREFIX} "${DESTDIR}/${BINDIR}/loongoffice"
 fi
 
-test "${PREFIX}" = libreofficedev${PRODUCTVERSION} && mime_def_file="libreofficedev${PRODUCTVERSION}.xml" || mime_def_file="libreoffice${PRODUCTVERSION}.xml"
+test "${PREFIX}" = loongofficedev && mime_def_file="loongofficedev.xml" || mime_def_file="loongoffice.xml"
 mkdir -p "${DESTDIR}/${PREFIXDIR}/share/mime/packages"
 cp openoffice.org.xml "${DESTDIR}/${PREFIXDIR}/share/mime/packages/$mime_def_file"
 chmod 0644 "${DESTDIR}/${PREFIXDIR}/share/mime/packages/$mime_def_file"
@@ -61,4 +61,14 @@ for i in base calc draw impress writer; do
     cp "${APPDATA_SOURCE_DIR}/libreoffice-${i}.appdata.xml" "${DESTDIR}/${PREFIXDIR}/share/metainfo/${PREFIX}-${i}.appdata.xml"
 done
 cp "${APPDATA_SOURCE_DIR}/org.libreoffice.kde.metainfo.xml" "${DESTDIR}/${PREFIXDIR}/share/metainfo/org.${PREFIX}.kde.metainfo.xml"
+
+# KDE Plasma "Create New Document" templates
+mkdir -p "${DESTDIR}/${PREFIXDIR}/share/templates"
+for i in loongoffice.odt loongoffice.odp loongoffice.ods loongoffice.odg; do
+    cp "${SOURCE_DIR}/templates/${i}.desktop" "${DESTDIR}/${PREFIXDIR}/share/templates/${i}.desktop"
+done
+mkdir -p "${DESTDIR}/${PREFIXDIR}/share/templates/.source"
+for i in loongoffice.odt loongoffice.odp loongoffice.ods loongoffice.odg; do
+    cp "${SOURCE_DIR}/templates/.source/${i}" "${DESTDIR}/${PREFIXDIR}/share/templates/.source/${i}"
+done
 

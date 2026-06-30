@@ -18,7 +18,7 @@ dnl cspell:ignoreRegExp / -isystem /
 # several non-alphanumeric characters, those are split off and used only for the
 # ABOUTBOXPRODUCTVERSIONSUFFIX in openoffice.lst. Why that is necessary, no idea.
 
-AC_INIT([LibreOffice],[25.8.7.3],[],[],[http://documentfoundation.org/])
+AC_INIT([LoongOffice],[25.8.7.3],[],[],[http://documentfoundation.org/])
 
 dnl libnumbertext needs autoconf 2.68, but that can pick up autoconf268 just fine if it is installed
 dnl whereas aclocal (as run by autogen.sh) insists on using autoconf and fails hard
@@ -5550,6 +5550,7 @@ linux-gnu*|linux-musl*)
         CPUNAME=MIPS64
         RTL_ARCH=MIPS64_EL
         EPM_FLAGS="-a mips64el"
+        EPM_FLAGS="-a mips64el -nm"
         PLATFORMID=linux_mips64_el
         ;;
     mipsel)
@@ -5607,6 +5608,7 @@ linux-gnu*|linux-musl*)
     loongarch64)
         CPUNAME=LOONGARCH64
         RTL_ARCH=LOONGARCH64
+        EPM_FLAGS="-a loongarch64 -nm"
         PLATFORMID=linux_loongarch64
         ;;
     *)
@@ -14226,6 +14228,23 @@ AC_SUBST([WITH_EXTRA_EXTENSIONS])
 
 if test "x$with_java" != "xno"; then
     libo_CHECK_EXTENSION([NLPSolver],[NLPSOLVER],[nlpsolver],[nlpsolver],[])
+fi
+
+libo_CHECK_EXTENSION([OFDReader],[OFDREADER],[ofdreader],[ofdreader],[])
+
+dnl ===================================================================
+dnl BatchPrint extension (pre-built deb with Python extension + native binary)
+dnl ===================================================================
+AC_ARG_ENABLE(ext-batchprint,
+    AS_HELP_STRING([--enable-ext-batchprint],
+        [Enable the BatchPrint extension (requires pre-built deb download)])
+)
+AC_MSG_CHECKING([whether to enable the BatchPrint extension])
+if test "x$enable_ext_batchprint" = "xyes"; then
+    BUILD_TYPE="$BUILD_TYPE BATCHPRINT"
+    AC_MSG_RESULT([yes])
+else
+    AC_MSG_RESULT([no])
 fi
 
 AC_MSG_CHECKING([whether to build opens___.ttf])
