@@ -63,15 +63,10 @@ char const* const* SunInfo::getRuntimePaths(int * size)
         "/lib/jli/libjli.dylib"
 #elif defined UNX
         "/lib/" JFW_PLUGIN_ARCH "/client/libjvm.so",
-        "/lib/" JFW_PLUGIN_ARCH "/minimal/libjvm.so",
         "/lib/" JFW_PLUGIN_ARCH "/server/libjvm.so",
-        "/lib/" JFW_PLUGIN_ARCH "/zero/libjvm.so",
         "/lib/" JFW_PLUGIN_ARCH "/classic/libjvm.so",
         "/lib/" JFW_PLUGIN_ARCH "/jrockit/libjvm.so",
-        "/lib/client/libjvm.so",
-        "/lib/minimal/libjvm.so",
-        "/lib/server/libjvm.so",
-        "/lib/zero/libjvm.so"
+        "/lib/server/libjvm.so"
 #endif
     };
     *size = std::size(ar);
@@ -83,9 +78,7 @@ char const* const* SunInfo::getLibraryPaths(int* size)
 #if defined UNX && !defined MACOSX
     static char const * const ar[] = {
         "/lib/" JFW_PLUGIN_ARCH "/client",
-        "/lib/" JFW_PLUGIN_ARCH "/minimal",
         "/lib/" JFW_PLUGIN_ARCH "/server",
-        "/lib/" JFW_PLUGIN_ARCH "/zero",
         "/lib/" JFW_PLUGIN_ARCH "/native_threads",
         ("/lib/" JFW_PLUGIN_ARCH)
     };
